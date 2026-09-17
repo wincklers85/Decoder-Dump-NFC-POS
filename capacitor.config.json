@@ -1,0 +1,6 @@
+{
+  "appId":"it.wincklers.decoderposnfc",
+  "appName":"Decoder NFC POS",
+  "webDir":"docs",
+  "server":{"androidScheme":"https"}
+}

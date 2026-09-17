@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <title>Decoder Dump NFC/POS</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Decoder Dump NFC/POS</h1>
+      <p>Decoder e generatore valori • offline</p>
+    </div>
+    <span class="badge">v1.0</span>
+  </header>
+
+  <main class="container">
+    <section class="card hero">
+      <h2>Decodifica dump</h2>
+      <label for="hexInput">Dump esadecimale</label>
+      <textarea id="hexInput" spellcheck="false" autocapitalize="characters" placeholder="Incolla qui il dump NFC o POS..."></textarea>
+      <div class="actions grid2">
+        <button id="pasteBtn" class="primary">📋 Incolla</button>
+        <button id="decodeBtn" class="success">⚡ Decodifica</button>
+        <button id="copyInputBtn">⧉ Copia</button>
+        <button id="clearBtn" class="danger-lite">Pulisci</button>
+      </div>
+      <div class="chips">
+        <button data-example="31.50">Esempio 31,50</button>
+        <button data-example="1.10">Esempio 1,10</button>
+        <button data-example="13.85">Esempio NFC 13,85</button>
+      </div>
+      <div id="errorBox" class="alert hidden"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div>
+          <h2>Generatore valore NFC</h2>
+          <p>Calcola i byte little-endian dell'importo.</p>
+        </div>
+        <span class="badge soft">Byte 6–7</span>
+      </div>
+
+      <div class="preset-grid">
+        <button class="quick" data-value="10">€10</button>
+        <button class="quick" data-value="20">€20</button>
+        <button class="quick" data-value="31.50">€31,50</button>
+        <button class="quick" data-value="50">€50</button>
+      </div>
+
+      <label for="manualAmount">Importo manuale (€)</label>
+      <div class="amount-row">
+        <input id="manualAmount" inputmode="decimal" value="10,00" placeholder="es. 12,50">
+        <button id="generateAmountBtn" class="success">Genera</button>
+      </div>
+      <div id="generatorError" class="alert hidden"></div>
+
+      <div class="stats">
+        <div><small>Importo</small><strong id="genEuros">10,00 €</strong></div>
+        <div><small>Centesimi</small><strong id="genCents">1000</strong></div>
+        <div><small>Little-endian</small><strong id="genBytes" class="mono">E8 03</strong></div>
+      </div>
+
+      <div class="fieldbox">
+        <div class="fieldhead"><span>Byte valore</span><button id="copyBytesBtn">⧉ Copia</button></div>
+        <pre id="generatedBytes">E8 03</pre>
+      </div>
+      <div class="fieldbox">
+        <div class="fieldhead"><span>Dump NFC generato</span><button id="copyGeneratedDumpBtn">⧉ Copia</button></div>
+        <pre id="generatedDump" class="wrap"></pre>
+      </div>
+    </section>
+
+    <section id="resultsSection" class="hidden">
+      <div class="card">
+        <div class="result-head">
+          <div><small>Tipo dump</small><strong id="dumpType">—</strong></div>
+          <div><small>Lunghezza</small><strong id="dumpLength">—</strong></div>
+        </div>
+      </div>
+
+      <div id="creditSelector" class="card hidden">
+        <label for="creditSelect">Valore da visualizzare</label>
+        <select id="creditSelect"></select>
+      </div>
+
+      <div class="card">
+        <h2>Dati decodificati</h2>
+        <div id="resultsTable" class="result-list"></div>
+      </div>
+
+      <div class="card">
+        <h2>Spiegazione calcolo</h2>
+        <div id="explainer" class="explain-list"></div>
+      </div>
+
+      <div class="card">
+        <div class="fieldhead"><h2>Dump analizzato</h2><button id="copyRawBtn">⧉ Copia</button></div>
+        <pre id="rawDump" class="wrap"></pre>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="app.js"></script>
+</body>
+</html>
